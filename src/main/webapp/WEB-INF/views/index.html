@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Book List</h3>
+<p>
+    <a th:href="@{/books/return}">Return Book</a>
+</p>
+<p>
+    <a th:href="@{/books/create}">
+        Add new book
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${success}" style="margin-bottom: 5px;">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<div class="notify">
+    <div th:if="${cardCode}" style="margin-bottom: 5px;">
+        <span th:text="'Book borrowing card code: ' + ${cardCode}"></span>
+    </div>
+</div>
+<table id="list">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book, bState:${books}" th:class="${bState.odd}?'odd':'even'">
+        <td th:text="${bState.count}"></td>
+        <td>
+            <a th:href="@{/books/{id}/view(id=${book.id})}" th:text="${book.title}"></a>
+        </td>
+        <td th:text="${book.quantity}"></td>
+        <td>
+            <a th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/books/{id}/delete(id=${book.id})}">Delete</a>
+            </td>
+    </tr>
+    </tbody>
+</table>
+<footer th:insert="/layout :: footer"></footer>
+</body>
+</html>
